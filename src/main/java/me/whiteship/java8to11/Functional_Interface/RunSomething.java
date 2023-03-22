@@ -1,4 +1,4 @@
-package me.whiteship.java8to11;
+package me.whiteship.java8to11.Functional_Interface;
 
 @FunctionalInterface
 //함수형 인터페이스를 정의할때는 이런 어노테이션을 선언해주면 좋음

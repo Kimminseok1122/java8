@@ -1,4 +1,4 @@
-package me.whiteship.java8to11;
+package me.whiteship.java8to11.Functional_Interface;
 
 import java.util.function.Function;
 
