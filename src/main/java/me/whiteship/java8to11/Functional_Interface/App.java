@@ -8,6 +8,7 @@ import java.util.function.UnaryOperator;
 public class App {
     public static void main(String[] args) {
         //지금까지 한것은 아래처럼 Lamda Expression으로 직접 구현한것
+        UnaryOperator<String> hi_0 = (s) -> "hi" + s;
         Function<Integer, String> intToString = (i) -> "number";
 
         //스태틱 메소드 레퍼런스 사용방법
@@ -20,7 +21,6 @@ public class App {
         //생성자는 입력값이 없고 Greeting이라는 결과를 가져오는것
         //이것 자체로는 아무것도 아닌것임
         Supplier<Greeting> newGreeting = Greeting::new;
-        //이렇게 써야 Greeting을 온전히 가져올 수 있음
         Greeting greeting1 = newGreeting.get();
 
         Function<String, Greeting> runnable = Greeting::new;

@@ -19,31 +19,32 @@ public class Foo {
 //        RunSomething runSomething = () -> System.out.println("Hello");
 //        runSomething.doIt();
 
-//        //같은 값을 넣었을때 같은 결과가 나와야 함수형 프로그래밍임
+//      같은 값을 넣었을때 같은 결과가 나와야 Pure Function
 //        RunSomething runSomething = (number) -> number + 10;
 
-        //같은 값을 넣었을때 같지 않은 결과 퓨어한 함수가 아님
-        //밖에있는 값은 참조만 하는것은 가능 단 baseNumber++ 같은건 안됨 final이라 가정하고 쓰는것
-        //int baseNumber = 10;
+        //다만, 밖에있는 값은 참조만 하는것은 가능 단 baseNumber++ 같은건 안됨 final이라 가정하고 쓰는것
+        int baseNumber = 10;
         RunSomething runSomething = new RunSomething() {
-            int baseNumber = 10;
+            //baseNumber 둘다 외부의 값
             @Override
             public int doIt(int number) {
-                baseNumber++;
+                //baseNumber++;
                 return number + baseNumber;
             }
+            //baseNumber++;
         };
 
-        //직접 클래스를 만듬
-//        Plus10 plus10 = new Plus10();
-//        System.out.println(plus10.apply(1));
 
+        //직접 클래스를 만듬
+        Plus10 plus10 = new Plus10();
+        System.out.println(plus10.apply(1));
         //위랑 같은 결과값이 나온다.
         Function<Integer, Integer> plus10_1 = (i) -> i + 10;
         Function<Integer, Integer> multiply2 = (i) -> i * 2;
 
-        //함수가 두개 쓰인모습
+        //compose : multiply2 -> plus10
         Function<Integer, Integer> multiply2AndPlus10 = plus10_1.compose(multiply2);
+        //andThen : plus10 -> multiply2
         Function<Integer, Integer> plus10AndMultiply2 = plus10_1.andThen(multiply2);
 
         //리턴이 없고 파라미터를 받기만하는것
@@ -70,9 +71,6 @@ public class Foo {
 
     private void run() {
 
-        //로컬 variable 자바8부터는 final키워드 생략가능한 경우가 있음
-        //이 변수가 사실상 final일 경우(이 변수가 어디서도 변경되지 않는경우) 생략가능
-        //effective final일때 참조가능
         int baseNumber = 10;
 
         //메소드 내부에 정의한 로컬클래스
