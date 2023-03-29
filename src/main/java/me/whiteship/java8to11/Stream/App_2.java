@@ -1,15 +1,12 @@
 package me.whiteship.java8to11.Stream;
 
-import org.springframework.util.StringUtils;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-public class App {
+public class App_2 {
     public static void main(String[] args) {
         //stream Api이란 연속된 데이터를 처리하는 operation의 모음;
 
@@ -55,9 +52,9 @@ public class App {
         //Stream은 병렬적 처리가 가능하다.
         //단 병렬쳐리가 무조건 좋은것은 아님. 스레드가 만들어지고 스레드 컨텍스트 스위칭 비용 이런것이 더 나올 수 있음
         //병렬처리가 유용할때는 데이터가 정말 방대할때 클때만 유용
-//        List<String> collect = names.parallelStream().map(String::toUpperCase)
-//                .collect(Collectors.toList());
-//        collect.forEach(System.out::println);
+        List<String> collect = names.parallelStream().map(String::toUpperCase)
+                .collect(Collectors.toList());
+        collect.forEach(System.out::println);
 
         List<OnlineClass> springClasses = new ArrayList<>();
         springClasses.add(new OnlineClass(1, "spring boot", true));
@@ -67,25 +64,20 @@ public class App {
         springClasses.add(new OnlineClass(5, "rest api development", false));
 
         System.out.println("===spring 으로 시작하는 수업===");
-        // TODO
-        springClasses.stream()
-                .filter(oc -> oc.getTitle().startsWith("spring"))
-                .forEach(oc -> System.out.println(oc.getTitle()));
+        springClasses.stream().filter(oc -> oc.getTitle().startsWith("spring"));
         //현재 OnlineClass가 지나감 근데 변경하지 않았으므로 계속 데이터 타입은 OnlineClass
         //Stream을 반환하지않는 모든것이 다 종료 Stream
 
         System.out.println("===close 되지 않은 수업===");
+        springClasses.stream().filter(Predicate.not(OnlineClass::isClose));
         // TODO
-        springClasses.stream()
-                .filter(Predicate.not(OnlineClass::isClose))
-                .forEach(oc -> System.out.println(oc.isClose()));
+
         //메서드 참조를 쓸때 !이 안되고 Predicate.not 을 쓰면 됨
 
         System.out.println("===수업 이름만 모아서 스트림 만들기===");
+        springClasses.stream().map(OnlineClass::getTitle);
         // TODO
-        springClasses.stream()
-                .map(OnlineClass::getTitle)
-                .forEach(System.out::println);
+
         //forEach에는 String 타입이 들어온다./
 
         List<OnlineClass> javaClasses = new ArrayList<>();
@@ -100,34 +92,36 @@ public class App {
 
         System.out.println("===두 수업 목록에 들어있는 모든 수업 아이디 출력===");
         // TODO
-        keesunEvents.stream()
-                .flatMap(Collection::stream)
-                .forEach(oc -> System.out.println(oc.getId()));
+//        for (List<OnlineClass> keesunEvent : keesunEvents) {
+//            keesunEvent.stream().map(s -> s.getTitle()).forEach(System.out::println);
+//        }
+        //땡땡땡 여기서는 flatMap을 이용해줘야했음
+
 
         System.out.println("===10부터 1씩 증가하는 무제한 스트림 중에서 앞에 10개 빼고 최대 10개 까지만===");
         // TODO
-        Stream.iterate(10, i -> i + 1)
-                .skip(10)
-                .limit(10)
-                .forEach(System.out::println);
+
 
         System.out.println("===자바 수업 중에 Test가 들어있는 수업 확인===");
         // TODO
-        boolean test = javaClasses.stream()
-                .anyMatch(oc -> oc.getTitle().contains("Test"));
-        System.out.println(test);
+//        javaClasses.stream()
+//                .map(OnlineClass::getTitle)
+//                .filter(s -> s.contains("Test"))
+//                .forEach(System.out::println);
+        //anyMatch 를 쓰면됨
+
         //바로 boolean이 리턴됨
 
         System.out.println("===스프링 수업 중에 제목에 spring이 들어간 것만 모아서 List로 만들기===");
         // TODO
-        List<String> spring = springClasses.stream()
-                .filter(oc -> oc.getTitle().contains("spring"))
-                .map(OnlineClass::getTitle)
-                .collect(Collectors.toList());
+//        List<String> collect = keesunEvents.stream()
+//                .flatMap(Collection::stream)
+//                .map(OnlineClass::getTitle)
+//                .collect(Collectors.toList());
 
         //순서를 바꾸면 결과가 달라진다.
         //예를들어 filter보다 map을 먼저하면 뒤에 오는것들은 String타입이 되어서 결과가 바뀐다.
 
-        spring.forEach(System.out::println);
+
     }
 }

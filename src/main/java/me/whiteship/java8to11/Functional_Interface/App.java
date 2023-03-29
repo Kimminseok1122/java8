@@ -30,6 +30,7 @@ public class App {
         Greeting keesun = keesunGreeting.apply("keesun");
         System.out.println(keesun.getName());
 
+
         //불특정 다수 Arrays.sort에서 new Compare형태의 익명클래스를 쓸수도 있지만
         //자바8 부터는 함수형 인터페이스로 바뀌어서 람다 사용가능
         //람다를 사용가능하다는것은 메소드 reference도 사용가능
